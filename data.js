@@ -166,10 +166,10 @@ var QUESTIONS = [
     {
         text: '发现同事工作中出了明显错误，你会？',
         options: [
-            { text: '私下找他提醒，给人留面子', scores: { yg: 2, wl: 1 } },
+            { text: '私下找他提醒，给人留面子', scores: { yg: 1 } },
             { text: '在会上直接指出，对事不对人', scores: { yg: -2, xh: 1 } },
             { text: '不说，不关我的事', scores: { jf: -1, xh: -1 } },
-            { text: '告诉领导，让领导来处理', scores: { yg: 1, wl: 1 } }
+            { text: '告诉领导，让领导来处理', scores: { yg: 1, wl: -1 } }
         ]
     },
     {
@@ -185,18 +185,18 @@ var QUESTIONS = [
         text: '年终考核，你觉得最重要的是？',
         options: [
             { text: '实打实的工作业绩和数据', scores: { jf: 1, yg: -1 } },
-            { text: '领导对你的印象和评价', scores: { yg: 2, wl: 1 } },
-            { text: '别垫底就行，平安过关', scores: { jf: -2, wl: 1 } },
+            { text: '领导对你的印象和评价', scores: { yg: 1 } },
+            { text: '别垫底就行，平安过关', scores: { jf: -2 } },
             { text: '考核结果不重要，自己学到东西最重要', scores: { yg: -1, wl: -1 } }
         ]
     },
     {
         text: '得知同事升职了，你的真实想法是？',
         options: [
-            { text: '分析他为什么能升，复盘自己的差距', scores: { jf: 2, yg: 1 } },
+            { text: '分析他为什么能升，复盘自己的差距', scores: { jf: 2 } },
             { text: '恭喜恭喜，与我无关', scores: { jf: -1, xh: -1 } },
-            { text: '如果他确实有能力，心服口服', scores: { yg: -1, wl: 1 } },
-            { text: '有点不爽，但也不会让人看出来', scores: { yg: 1, xh: -1 } }
+            { text: '如果他确实有能力，心服口服', scores: { yg: -1 } },
+            { text: '有点不爽，但也不会让人看出来', scores: { xh: -1 } }
         ]
     },
     {
@@ -205,14 +205,14 @@ var QUESTIONS = [
             { text: '先接下来，执行中再想办法调整', scores: { yg: 1, wl: 1 } },
             { text: '当场委婉表达不同意见', scores: { yg: -1, xh: 1 } },
             { text: '接了但偷偷按自己的方式做', scores: { yg: -1, wl: -1 } },
-            { text: '先摸清领导的真实意图再决定怎么办', scores: { yg: 2, jf: 1 } }
+            { text: '先摸清领导的真实意图再决定怎么办', scores: { yg: 1, jf: 1 } }
         ]
     },
     {
         text: '办公室里有两派明争暗斗，你会？',
         options: [
-            { text: '两边都处好关系，保持中立', scores: { yg: 2, wl: 1 } },
-            { text: '选一边站，跟对人很重要', scores: { yg: 1, wl: -1 } },
+            { text: '两边都处好关系，保持中立', scores: { yg: 1 } },
+            { text: '选一边站，跟对人很重要', scores: { wl: -1 } },
             { text: '埋头干活不掺和，用实力说话', scores: { yg: -1, xh: -1 } },
             { text: '看热闹不嫌事大，当个吃瓜群众', scores: { jf: -1, xh: -1 } }
         ]
@@ -221,7 +221,7 @@ var QUESTIONS = [
         text: '同事请你帮忙做一件不在你职责范围内的事，你会？',
         options: [
             { text: '帮了，反正也是积累人脉', scores: { yg: 1, jf: 1 } },
-            { text: '看关系远近再决定', scores: { yg: 1, wl: 1 } },
+            { text: '看关系远近再决定', scores: { yg: 1 } },
             { text: '直接说"这不是我的职责范围"', scores: { yg: -2, xh: 1 } },
             { text: '教他怎么做，但不替他做', scores: { yg: -1, jf: -1 } }
         ]
@@ -230,18 +230,18 @@ var QUESTIONS = [
     {
         text: '中秋节前，合作单位的人提着礼品来"坐坐"，你会？',
         options: [
-            { text: '客气接待，但礼品坚决不收，规定就是规定', scores: { yg: 1, wl: 1 } },
+            { text: '客气接待，但礼品坚决不收，规定就是规定', scores: { yg: -1, wl: 2 } },
             { text: '直接拒绝，连门都不让进', scores: { yg: -2, xh: 1 } },
-            { text: '收下后悄悄上交给纪检部门', scores: { yg: 1, xh: -1 } },
-            { text: '打太极："哎呀这怎么好意思，你看我这办公室也没地方放……"', scores: { yg: 2, jf: -1 } }
+            { text: '收下后悄悄上交给纪检部门', scores: { xh: -1, wl: -1 } },
+            { text: '打太极："哎呀这怎么好意思，你看我这办公室也没地方放……"', scores: { yg: 1, jf: -1 } }
         ]
     },
     {
         text: '单位工会组织团建活动，要求"厉行节约、务实简朴"，你的反应？',
         options: [
-            { text: '积极响应，简朴不代表没意思，我来策划', scores: { xh: 1, yg: 1 } },
+            { text: '积极响应，简朴不代表没意思，我来策划', scores: { xh: 2, wl: -1 } },
             { text: '走个过场就行，别搞太复杂', scores: { jf: -1, wl: 1 } },
-            { text: '正好，简朴点大家都轻松', scores: { yg: -1, wl: 1 } },
+            { text: '正好，简朴点大家都轻松', scores: { yg: -1 } },
             { text: '能不参加吗？团建是我最不想去的活动', scores: { jf: -2, xh: -1 } }
         ]
     },
@@ -249,15 +249,15 @@ var QUESTIONS = [
         text: '领导让你写一份落实八项规定的自查报告，你会？',
         options: [
             { text: '认真梳理，借机展示我们部门的成绩', scores: { jf: 1, yg: 1 } },
-            { text: '找去年的模板，改改数据就交了', scores: { jf: -1, wl: 1 } },
-            { text: '把真实问题写进去，报告就该实事求是', scores: { yg: -1, wl: -1 } },
-            { text: '先看看其他部门怎么写的，不能太出格也不能太敷衍', scores: { yg: 2, wl: 1 } }
+            { text: '找去年的模板，改改数据就交了', scores: { jf: -1 } },
+            { text: '把真实问题写进去，报告就该实事求是', scores: { yg: -2, wl: -1 } },
+            { text: '先看看其他部门怎么写的，不能太出格也不能太敷衍', scores: { yg: 1, wl: 1 } }
         ]
     },
     {
         text: '你发现有同事用公车接孩子放学，你会？',
         options: [
-            { text: '当没看见，多一事不如少一事', scores: { jf: -1, yg: 1 } },
+            { text: '当没看见，多一事不如少一事', scores: { jf: -1, yg: -1 } },
             { text: '私下提醒他注意影响', scores: { yg: 1, wl: 1 } },
             { text: '直接向纪检部门反映', scores: { yg: -2, wl: -1 } },
             { text: '在心里记下来，说不定以后用得上', scores: { yg: 1, xh: -1 } }
@@ -267,16 +267,16 @@ var QUESTIONS = [
         text: '上级来检查工作，领导让你"准备准备"，你的理解是？',
         options: [
             { text: '把真实工作成果整理好，用数据说话', scores: { yg: -1, jf: 1 } },
-            { text: '心领神会，该补的材料补，该美化的美化', scores: { yg: 2, wl: 1 } },
-            { text: '问领导具体要准备什么，别自己瞎猜', scores: { wl: 1, yg: -1 } },
+            { text: '心领神会，该补的材料补，该美化的美化', scores: { yg: 1 } },
+            { text: '问领导具体要准备什么，别自己瞎猜', scores: { yg: -1 } },
             { text: '能应付就应付，检查年年有，别太当回事', scores: { jf: -2, wl: -1 } }
         ]
     },
     {
         text: '出差住宿，标准是每晚300元，你会？',
         options: [
-            { text: '严格按标准来，合规最重要', scores: { wl: 2, yg: -1 } },
-            { text: '订标准内最好的，在规则内把生活过好', scores: { wl: 1, yg: 1 } },
+            { text: '严格按标准来，合规最重要', scores: { wl: 1, yg: -1 } },
+            { text: '订标准内最好的，在规则内把生活过好', scores: { yg: 1, wl: -1 } },
             { text: '找个便宜的，省下来的差价……算了还是别想了', scores: { jf: -1, wl: 1 } },
             { text: '先看有没有朋友能安排，能省则省', scores: { yg: 1, wl: -1 } }
         ]
@@ -295,7 +295,7 @@ var QUESTIONS = [
         text: '单位组织学习最新政策文件，要求写心得体会，你会？',
         options: [
             { text: '认真学习，写出有个人见解的心得', scores: { jf: 1, yg: -1 } },
-            { text: '"靶向发力""赋能增效"这些词先安排上，框架比内容重要', scores: { yg: 2, xh: 1 } },
+            { text: '"靶向发力""赋能增效"这些词先安排上，框架比内容重要', scores: { yg: 1, xh: 1 } },
             { text: '复制粘贴改一改，应付了事', scores: { jf: -2, xh: -1 } },
             { text: '请教写得好的同事，学习他们的套路', scores: { yg: 1, jf: 1 } }
         ]
@@ -304,7 +304,7 @@ var QUESTIONS = [
         text: '开会讨论"高质量发展"落实方案，轮到你发言，你会？',
         options: [
             { text: '提前准备，讲得有理有据，让领导刮目相看', scores: { jf: 1, xh: 2 } },
-            { text: '"同意前面几位同志的意见"，然后复述一遍领导的话', scores: { yg: 2, jf: -1 } },
+            { text: '"同意前面几位同志的意见"，然后复述一遍领导的话', scores: { yg: 1, jf: -1 } },
             { text: '提出一个不一样的角度，哪怕有争议', scores: { yg: -1, wl: -2 } },
             { text: '尽量少说，说多错多', scores: { xh: -2, wl: 1 } }
         ]
@@ -313,8 +313,8 @@ var QUESTIONS = [
         text: '年终总结要对标"十五五规划"指标，你的态度是？',
         options: [
             { text: '认真对标每个指标，用数据证明成绩', scores: { jf: 2, wl: 1 } },
-            { text: '指标完成不了的地方，换个角度重新解读', scores: { yg: 2, xh: 1 } },
-            { text: '照搬去年的总结，改改数据和年份', scores: { jf: -2, wl: 1 } },
+            { text: '指标完成不了的地方，换个角度重新解读', scores: { yg: 1, xh: 1 } },
+            { text: '照搬去年的总结，改改数据和年份', scores: { jf: -2 } },
             { text: '老实写完成了多少就是多少，不注水', scores: { yg: -2, wl: -1 } }
         ]
     },
@@ -323,7 +323,7 @@ var QUESTIONS = [
         text: '上级要一份惠民政策落实情况的汇报，但实际数据不太好看，你会？',
         options: [
             { text: '如实汇报，问题摆出来才能解决', scores: { yg: -2, wl: -1 } },
-            { text: '数据不改，但在叙述角度上下功夫，突出亮点弱化不足', scores: { yg: 2, jf: 1 } },
+            { text: '数据不改，但在叙述角度上下功夫，突出亮点弱化不足', scores: { yg: 1, jf: 1 } },
             { text: '跟领导商量怎么写，这种事不能自己拿主意', scores: { yg: 1, wl: 1 } },
             { text: '反正每年都这样，照着模板写个差不多的交上去', scores: { jf: -2, xh: -1 } }
         ]
@@ -332,15 +332,15 @@ var QUESTIONS = [
         text: '有群众反复打12345投诉你们部门，领导让你"处理一下"，你会？',
         options: [
             { text: '认真了解诉求，能解决的尽量解决', scores: { jf: 1, yg: -1 } },
-            { text: '按流程走，该回复回复该转办转办，留好痕迹最重要', scores: { wl: 2, yg: 1 } },
-            { text: '打电话安抚一下，争取让对方撤诉', scores: { yg: 2, xh: -1 } },
-            { text: '这种事谁接谁倒霉，想办法让别的科室接手', scores: { jf: -1, yg: 1 } }
+            { text: '按流程走，该回复回复该转办转办，留好痕迹最重要', scores: { wl: 1, yg: 1 } },
+            { text: '打电话安抚一下，争取让对方撤诉', scores: { yg: 1, xh: -1 } },
+            { text: '这种事谁接谁倒霉，想办法让别的科室接手', scores: { jf: -1, yg: -1 } }
         ]
     },
     {
         text: '一个审批按规定应该卡掉，但申请人确实有困难而且情况特殊，你会？',
         options: [
-            { text: '规定就是规定，不能开口子', scores: { yg: -1, wl: 2 } },
+            { text: '规定就是规定，不能开口子', scores: { yg: -1, wl: 1 } },
             { text: '请示领导，让领导来定这个事', scores: { yg: 1, wl: 1 } },
             { text: '在规定允许的范围内想办法变通', scores: { yg: 1, wl: -1 } },
             { text: '帮他想个别的路径，虽然不走这个审批但能解决问题', scores: { yg: -1, wl: -2 } }
