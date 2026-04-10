@@ -153,6 +153,34 @@ body {
 }
 
 /* ===== Intro Page ===== */
+/* Intro background grid */
+.intro-bg-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    gap: 8px;
+    padding: 20px;
+    opacity: 0.15;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.intro-bg-grid img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+#intro {
+    position: relative;
+}
+
 .intro-container {
     text-align: center;
     padding-top: 60px;

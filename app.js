@@ -270,55 +270,20 @@ function shareResult() {
 
 // ===== Intro Background =====
 function generateIntroBg() {
+    var intro = document.getElementById('intro');
+    var grid = document.createElement('div');
+    grid.className = 'intro-bg-grid';
+
     var keys = Object.keys(TYPES);
-    var cols = 4;
-    var rows = 4;
-    var cellSize = 120;
-    var loaded = 0;
-    var images = [];
-
-    keys.forEach(function(key, idx) {
-        var img = new Image();
-        img.onload = function() {
-            images[idx] = img;
-            loaded++;
-            if (loaded === keys.length) drawBg();
-        };
-        img.onerror = function() {
-            loaded++;
-            if (loaded === keys.length) drawBg();
-        };
-        img.src = TYPES[key].image;
-    });
-
-    function drawBg() {
-        var canvas = document.createElement('canvas');
-        canvas.width = cols * cellSize;
-        canvas.height = rows * cellSize;
-        var ctx = canvas.getContext('2d');
-
-        // 填充背景色
-        ctx.fillStyle = '#faf8f5';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // 绘制每个角色
-        for (var i = 0; i < keys.length; i++) {
-            if (!images[i]) continue;
-            var col = i % cols;
-            var row = Math.floor(i / cols);
-            var x = col * cellSize;
-            var y = row * cellSize;
-            ctx.globalAlpha = 0.35;
-            ctx.drawImage(images[i], x + 10, y + 10, cellSize - 20, cellSize - 20);
-        }
-        ctx.globalAlpha = 1;
-
-        var dataUrl = canvas.toDataURL('image/jpeg', 0.8);
-        var intro = document.getElementById('intro');
-        intro.style.backgroundImage = 'url(' + dataUrl + ')';
-        intro.style.backgroundSize = (cols * cellSize / 2) + 'px ' + (rows * cellSize / 2) + 'px';
-        intro.style.backgroundRepeat = 'repeat';
+    // 重复两遍铺满
+    var allKeys = keys.concat(keys);
+    for (var i = 0; i < allKeys.length; i++) {
+        var img = document.createElement('img');
+        img.src = TYPES[allKeys[i]].image;
+        img.alt = '';
+        grid.appendChild(img);
     }
+    intro.insertBefore(grid, intro.firstChild);
 }
 
 // ===== Init =====
