@@ -269,10 +269,32 @@ function shareResult() {
 function renderShareCanvas(type, avatarImg) {
     var canvas = document.getElementById('shareCanvas');
     var ctx = canvas.getContext('2d');
-
     var w = 640;
-    var h = 1000;
     var dpr = 2;
+    var pad = 40;
+
+    // 先用临时 canvas 计算文字行数来确定总高度
+    var tmpCanvas = document.createElement('canvas');
+    var tmpCtx = tmpCanvas.getContext('2d');
+    tmpCtx.font = '13px "Noto Sans SC", sans-serif';
+    var descLines = wrapText(tmpCtx, type.desc, w - pad * 2);
+    tmpCtx.font = '13px "Noto Sans SC", sans-serif';
+    var tipLines = wrapText(tmpCtx, type.tips, w - pad * 2 - 20);
+
+    // 动态计算高度
+    var avatarSize = avatarImg ? 200 : 0;
+    var y = 0;
+    y += 60;                              // 顶部留白 + 标题
+    y += 60;                              // 类型码
+    y += avatarImg ? avatarSize + 15 : 50; // 立绘或emoji
+    y += 45;                              // 类型名
+    y += 30;                              // 标签
+    y += descLines.length * 22 + 20;      // 描述
+    y += tipLines.length * 20 + 30;       // 生存建议
+    y += 4 * 36 + 20;                     // 维度条
+    y += 60;                              // 底部水印
+    var h = y;
+
     canvas.width = w * dpr;
     canvas.height = h * dpr;
     canvas.style.width = w + 'px';
@@ -283,8 +305,8 @@ function renderShareCanvas(type, avatarImg) {
     ctx.fillStyle = '#faf8f5';
     ctx.fillRect(0, 0, w, h);
 
-    // 水墨纹理
-    var grad = ctx.createRadialGradient(w * 0.2, h * 0.3, 0, w * 0.2, h * 0.3, w * 0.5);
+    // 水墨点缀
+    var grad = ctx.createRadialGradient(w * 0.2, h * 0.4, 0, w * 0.2, h * 0.4, w * 0.5);
     grad.addColorStop(0, 'rgba(196, 58, 49, 0.04)');
     grad.addColorStop(1, 'transparent');
     ctx.fillStyle = grad;
@@ -298,51 +320,79 @@ function renderShareCanvas(type, avatarImg) {
     ctx.fillStyle = lineGrad;
     ctx.fillRect(0, 0, w, 3);
 
+    // --- 开始绘制，用 curY 追踪当前位置 ---
+    var curY = 40;
+
     // 标题
     ctx.fillStyle = '#b8922e';
-    ctx.font = '14px "Noto Serif SC", serif';
+    ctx.font = '13px "Noto Serif SC", serif';
     ctx.textAlign = 'center';
-    ctx.fillText('组 织 鉴 定 书', w / 2, 50);
+    ctx.fillText('组 织 鉴 定 书', w / 2, curY);
+    curY += 15;
 
     // 类型码
     ctx.fillStyle = '#c43a31';
-    ctx.font = '900 48px "Noto Serif SC", serif';
-    ctx.fillText(state.resultCode, w / 2, 110);
+    ctx.font = '900 44px "Noto Serif SC", serif';
+    ctx.fillText(state.resultCode, w / 2, curY + 44);
+    curY += 55;
 
     // 立绘或Emoji
     if (avatarImg) {
-        var avatarSize = 180;
         var avatarX = w / 2 - avatarSize / 2;
-        var avatarY = 125;
-        ctx.drawImage(avatarImg, avatarX, avatarY, avatarSize, avatarSize);
+        ctx.drawImage(avatarImg, avatarX, curY, avatarSize, avatarSize);
+        curY += avatarSize + 15;
     } else {
         ctx.font = '48px sans-serif';
-        ctx.fillText(type.emoji, w / 2, 200);
+        ctx.fillText(type.emoji, w / 2, curY + 40);
+        curY += 50;
     }
 
     // 类型名
-    var nameY = avatarImg ? 330 : 230;
     ctx.fillStyle = '#2a2a2a';
-    ctx.font = '700 32px "Noto Serif SC", serif';
-    ctx.fillText(type.name, w / 2, nameY);
+    ctx.font = '700 28px "Noto Serif SC", serif';
+    ctx.fillText(type.name, w / 2, curY + 28);
+    curY += 40;
 
     // 标签
     ctx.fillStyle = '#c43a31';
-    ctx.font = '15px "Noto Sans SC", sans-serif';
-    ctx.fillText(type.tagline, w / 2, nameY + 35);
+    ctx.font = '14px "Noto Sans SC", sans-serif';
+    ctx.fillText(type.tagline, w / 2, curY);
+    curY += 25;
 
-    // 描述（自动换行）
-    ctx.fillStyle = 'rgba(42, 42, 42, 0.7)';
+    // 分割线
+    ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad, curY);
+    ctx.lineTo(w - pad, curY);
+    ctx.stroke();
+    curY += 18;
+
+    // 描述
+    ctx.fillStyle = 'rgba(42, 42, 42, 0.75)';
     ctx.font = '13px "Noto Sans SC", sans-serif';
     ctx.textAlign = 'left';
-    var descLines = wrapText(ctx, type.desc, w - 80);
-    var descY = nameY + 65;
     for (var i = 0; i < descLines.length; i++) {
-        ctx.fillText(descLines[i], 40, descY + i * 22);
+        ctx.fillText(descLines[i], pad, curY + i * 22);
     }
+    curY += descLines.length * 22 + 12;
+
+    // 生存建议
+    ctx.fillStyle = 'rgba(196, 58, 49, 0.06)';
+    var tipH = tipLines.length * 20 + 16;
+    roundRect(ctx, pad, curY - 4, w - pad * 2, tipH, 6);
+    ctx.fill();
+    ctx.fillStyle = '#c43a31';
+    roundRect(ctx, pad, curY - 4, 3, tipH, 1);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(42, 42, 42, 0.6)';
+    ctx.font = '12px "Noto Sans SC", sans-serif';
+    for (var i = 0; i < tipLines.length; i++) {
+        ctx.fillText(tipLines[i], pad + 14, curY + 10 + i * 20);
+    }
+    curY += tipH + 20;
 
     // 维度条
-    var barY = descY + descLines.length * 22 + 30;
     var dims = [
         { key: 'jf', left: '卷', right: '佛' },
         { key: 'yg', left: '圆', right: '刚' },
@@ -353,59 +403,47 @@ function renderShareCanvas(type, avatarImg) {
     for (var i = 0; i < dims.length; i++) {
         var d = dims[i];
         var pct = state.resultPcts[d.key];
-        var y = barY + i * 40;
+        var barRowY = curY + i * 36;
 
+        // 左标签
         ctx.fillStyle = '#c43a31';
-        ctx.font = '500 14px "Noto Sans SC", sans-serif';
+        ctx.font = '500 13px "Noto Sans SC", sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(d.left, 40, y + 12);
+        ctx.fillText(d.left, pad + 10, barRowY + 11);
 
-        var trackX = 65;
-        var trackW = w - 170;
+        // 轨道
+        var trackX = pad + 30;
+        var trackW = w - pad * 2 - 100;
         ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
-        roundRect(ctx, trackX, y + 2, trackW, 10, 5);
+        roundRect(ctx, trackX, barRowY + 3, trackW, 8, 4);
         ctx.fill();
 
+        // 填充
         var fillGrad = ctx.createLinearGradient(trackX, 0, trackX + trackW, 0);
         fillGrad.addColorStop(0, '#c43a31');
-        fillGrad.addColorStop(1, 'rgba(196, 58, 49, 0.2)');
+        fillGrad.addColorStop(1, 'rgba(196, 58, 49, 0.15)');
         ctx.fillStyle = fillGrad;
-        roundRect(ctx, trackX, y + 2, trackW * pct / 100, 10, 5);
+        roundRect(ctx, trackX, barRowY + 3, trackW * pct / 100, 8, 4);
         ctx.fill();
 
+        // 百分比
         ctx.fillStyle = 'rgba(42, 42, 42, 0.4)';
         ctx.font = '11px "Noto Sans SC", sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(pct + ':' + (100 - pct), w - 65, y + 12);
+        ctx.fillText(pct + ':' + (100 - pct), w - pad - 35, barRowY + 11);
 
+        // 右标签
         ctx.fillStyle = '#b8922e';
-        ctx.font = '500 14px "Noto Sans SC", sans-serif';
-        ctx.fillText(d.right, w - 25, y + 12);
+        ctx.font = '500 13px "Noto Sans SC", sans-serif';
+        ctx.fillText(d.right, w - pad - 5, barRowY + 11);
     }
+    curY += 4 * 36 + 10;
 
-    // 印章
-    var sealY = barY + 4 * 40 + 40;
-    ctx.beginPath();
-    ctx.arc(w / 2, sealY, 28, 0, Math.PI * 2);
-    ctx.strokeStyle = '#c43a31';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(w / 2, sealY, 24, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(196, 58, 49, 0.5)';
-    ctx.lineWidth = 0.5;
-    ctx.stroke();
-    ctx.fillStyle = '#c43a31';
-    ctx.font = '900 11px "Noto Serif SC", serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('鉴定', w / 2, sealY - 4);
-    ctx.fillText('有效', w / 2, sealY + 10);
-
-    // 底部
-    ctx.fillStyle = 'rgba(42, 42, 42, 0.25)';
+    // 底部水印
+    ctx.fillStyle = 'rgba(42, 42, 42, 0.2)';
     ctx.font = '11px "Noto Sans SC", sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('人民的T.I. — 体制内人格测试', w / 2, h - 30);
+    ctx.fillText('人民的T.I. — 体制内人格测试', w / 2, curY + 20);
 
     // 转为图片
     var dataUrl = canvas.toDataURL('image/png');
