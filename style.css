@@ -157,6 +157,8 @@ body {
     text-align: center;
     padding-top: 60px;
     padding-bottom: 40px;
+    position: relative;
+    z-index: 1;
 }
 
 .title {

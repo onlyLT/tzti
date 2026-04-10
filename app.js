@@ -308,7 +308,7 @@ function generateIntroBg() {
             var row = Math.floor(i / cols);
             var x = col * cellSize;
             var y = row * cellSize;
-            ctx.globalAlpha = 0.12;
+            ctx.globalAlpha = 0.35;
             ctx.drawImage(images[i], x + 10, y + 10, cellSize - 20, cellSize - 20);
         }
         ctx.globalAlpha = 1;
