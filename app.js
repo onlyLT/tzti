@@ -1,4 +1,4 @@
-/* TZTI 体制内人格测试 — 应用逻辑 */
+/* 人民的T.I. — 体制内人格测试 — 应用逻辑 */
 
 // ===== State =====
 var state = {
@@ -405,7 +405,7 @@ function renderShareCanvas(type, avatarImg) {
     ctx.fillStyle = 'rgba(42, 42, 42, 0.25)';
     ctx.font = '11px "Noto Sans SC", sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('TZTI 体制内人格测试', w / 2, h - 30);
+    ctx.fillText('人民的T.I. — 体制内人格测试', w / 2, h - 30);
 
     // 转为图片
     var dataUrl = canvas.toDataURL('image/png');
