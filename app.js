@@ -156,7 +156,11 @@ function showResult() {
     }
 
     document.getElementById('resultCode').textContent = state.resultCode;
-    document.getElementById('resultEmoji').textContent = type.emoji;
+    if (type.image) {
+        document.getElementById('resultEmoji').innerHTML = '<img src="' + type.image + '" alt="' + type.name + '" class="result-avatar">';
+    } else {
+        document.getElementById('resultEmoji').textContent = type.emoji;
+    }
     document.getElementById('resultName').textContent = type.name;
     document.getElementById('resultTagline').textContent = type.tagline;
     document.getElementById('resultDesc').textContent = type.desc;
@@ -249,12 +253,25 @@ function checkUrlResult() {
 
 // ===== Share Image =====
 function shareResult() {
-    var canvas = document.getElementById('shareCanvas');
-    var ctx = canvas.getContext('2d');
     var type = TYPES[state.resultCode];
 
+    // 如果有立绘图片，先加载再渲染
+    if (type.image) {
+        var img = new Image();
+        img.onload = function() { renderShareCanvas(type, img); };
+        img.onerror = function() { renderShareCanvas(type, null); };
+        img.src = type.image;
+    } else {
+        renderShareCanvas(type, null);
+    }
+}
+
+function renderShareCanvas(type, avatarImg) {
+    var canvas = document.getElementById('shareCanvas');
+    var ctx = canvas.getContext('2d');
+
     var w = 640;
-    var h = 920;
+    var h = 1000;
     var dpr = 2;
     canvas.width = w * dpr;
     canvas.height = h * dpr;
@@ -289,29 +306,50 @@ function shareResult() {
 
     // 类型码
     ctx.fillStyle = '#d4a847';
-    ctx.font = '900 52px "Noto Serif SC", serif';
-    ctx.fillText(state.resultCode, w / 2, 120);
+    ctx.font = '900 48px "Noto Serif SC", serif';
+    ctx.fillText(state.resultCode, w / 2, 110);
 
-    // Emoji
-    ctx.font = '48px sans-serif';
-    ctx.fillText(type.emoji, w / 2, 180);
+    // 立绘或Emoji
+    if (avatarImg) {
+        var avatarSize = 120;
+        var avatarX = w / 2 - avatarSize / 2;
+        var avatarY = 130;
+        // 圆形裁剪
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(w / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.clip();
+        ctx.drawImage(avatarImg, avatarX, avatarY, avatarSize, avatarSize);
+        ctx.restore();
+        // 圆形边框
+        ctx.beginPath();
+        ctx.arc(w / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(212, 168, 71, 0.3)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    } else {
+        ctx.font = '48px sans-serif';
+        ctx.fillText(type.emoji, w / 2, 200);
+    }
 
     // 类型名
+    var nameY = avatarImg ? 285 : 230;
     ctx.fillStyle = '#f0e6d3';
     ctx.font = '700 32px "Noto Serif SC", serif';
-    ctx.fillText(type.name, w / 2, 230);
+    ctx.fillText(type.name, w / 2, nameY);
 
     // 标签
     ctx.fillStyle = '#d4a847';
     ctx.font = '15px "Noto Sans SC", sans-serif';
-    ctx.fillText(type.tagline, w / 2, 265);
+    ctx.fillText(type.tagline, w / 2, nameY + 35);
 
     // 描述（自动换行）
     ctx.fillStyle = 'rgba(240, 230, 211, 0.7)';
     ctx.font = '13px "Noto Sans SC", sans-serif';
     ctx.textAlign = 'left';
     var descLines = wrapText(ctx, type.desc, w - 80);
-    var descY = 300;
+    var descY = nameY + 65;
     for (var i = 0; i < descLines.length; i++) {
         ctx.fillText(descLines[i], 40, descY + i * 22);
     }

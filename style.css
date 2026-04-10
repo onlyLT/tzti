@@ -423,6 +423,15 @@ body {
     margin-bottom: 12px;
 }
 
+.result-avatar {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 2px solid var(--color-gold-dim);
+    background: rgba(255, 255, 255, 0.03);
+}
+
 .result-type-name {
     font-family: var(--font-serif);
     font-size: 28px;
