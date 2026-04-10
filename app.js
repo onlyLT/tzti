@@ -186,11 +186,13 @@ function renderDimensionBars() {
         var pct = state.resultPcts[d.key];
         var leftPct = pct;
         var rightPct = 100 - pct;
+        var fillClass = (pct >= 50) ? 'left-fill' : 'right-fill';
+        var fillPct = (pct >= 50) ? pct : rightPct;
 
         html += '<div class="dim-bar-row">';
         html += '<span class="dim-bar-label left">' + d.left + '</span>';
-        html += '<div class="dim-bar-track" data-dim="' + d.key + '" data-pct="' + leftPct + '">';
-        html += '<div class="dim-bar-fill left-fill"></div>';
+        html += '<div class="dim-bar-track" data-dim="' + d.key + '" data-pct="' + fillPct + '">';
+        html += '<div class="dim-bar-fill ' + fillClass + '"></div>';
         html += '</div>';
         html += '<span class="dim-bar-pct">' + leftPct + ':' + rightPct + '</span>';
         html += '<span class="dim-bar-label right">' + d.right + '</span>';
