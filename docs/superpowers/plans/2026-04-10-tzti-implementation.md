@@ -44,7 +44,7 @@ Create `index.html` with the complete HTML structure containing all 3 page secti
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TZTI 体制内人格测试</title>
-    <meta name="description" content="24道题，测出你在体制内的真实人格。4个维度，16种类型，你是局长预备役还是摸鱼之王？">
+    <meta name="description" content="27道题，测出你在体制内的真实人格。4个维度，16种类型，你是局长预备役还是摸鱼之王？">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -69,7 +69,7 @@ Create `index.html` with the complete HTML structure containing all 3 page secti
                     <span class="dim-tag">显 vs 隐</span>
                     <span class="dim-tag">稳 vs 浪</span>
                 </div>
-                <p class="intro-desc">24道题，测出你在体制内的真实人格<br>4个维度 · 16种类型</p>
+                <p class="intro-desc">27道题，鉴定你的体制内真实人格<br>4个维度 · 16种类型</p>
                 <button class="btn btn-primary" onclick="startTest()">开 始 鉴 定</button>
                 <p class="disclaimer">* 纯属娱乐，请勿对号入座（虽然你一定会）</p>
             </div>
@@ -81,7 +81,7 @@ Create `index.html` with the complete HTML structure containing all 3 page secti
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
-                <div class="progress-text">第 <span id="currentQ">1</span> / <span id="totalQ">24</span> 题</div>
+                <div class="progress-text">第 <span id="currentQ">1</span> / <span id="totalQ">27</span> 题</div>
                 <div class="question-area" id="questionArea">
                     <div class="question-card" id="questionCard">
                         <p class="question-text" id="questionText"></p>
@@ -300,13 +300,13 @@ git commit -m "feat: add 16 personality type definitions with descriptions and t
 **Files:**
 - Modify: `data.js` (append after TYPES)
 
-- [ ] **Step 1: Add all 24 questions to data.js**
+- [ ] **Step 1: Add all 27 questions to data.js**
 
 Append the `QUESTIONS` array to `data.js`. Each question has `text` (场景), `options` (4个选项), and each option has `text` and `scores` (维度影响). Scoring uses: `jf` (卷佛, positive=卷), `yg` (圆刚, positive=圆), `xh` (显隐, positive=显), `wl` (稳浪, positive=稳). The last 4 questions (indices 20-23) are weighted questions — their scores are doubled during calculation.
 
 ```javascript
 // 24道测试题
-// 前20题为基础题，后4题为加权决胜题（分值在计算时×2）
+// 前23题为基础题，后4题为加权决胜题（分值在计算时×2）
 // scores: jf(卷+/佛-), yg(圆+/刚-), xh(显+/隐-), wl(稳+/浪-)
 var QUESTIONS = [
     // ===== 人际关系与职场生存（10题）=====
@@ -492,6 +492,34 @@ var QUESTIONS = [
             { text: '老实写完成了多少就是多少，不注水', scores: { yg: -2, wl: -1 } }
         ]
     },
+    // ===== 为人民服务与实际工作（3题）=====
+    {
+        text: '上级要一份惠民政策落实情况的汇报，但实际数据不太好看，你会？',
+        options: [
+            { text: '如实汇报，问题摆出来才能解决', scores: { yg: -2, wl: -1 } },
+            { text: '数据不改，但在叙述角度上下功夫，突出亮点弱化不足', scores: { yg: 2, jf: 1 } },
+            { text: '跟领导商量怎么写，这种事不能自己拿主意', scores: { yg: 1, wl: 1 } },
+            { text: '反正每年都这样，照着模板写个差不多的交上去', scores: { jf: -2, xh: -1 } }
+        ]
+    },
+    {
+        text: '有群众反复打12345投诉你们部门，领导让你"处理一下"，你会？',
+        options: [
+            { text: '认真了解诉求，能解决的尽量解决', scores: { jf: 1, yg: -1 } },
+            { text: '按流程走，该回复回复该转办转办，留好痕迹最重要', scores: { wl: 2, yg: 1 } },
+            { text: '打电话安抚一下，争取让对方撤诉', scores: { yg: 2, xh: -1 } },
+            { text: '这种事谁接谁倒霉，想办法让别的科室接手', scores: { jf: -1, yg: 1 } }
+        ]
+    },
+    {
+        text: '一个审批按规定应该卡掉，但申请人确实有困难而且情况特殊，你会？',
+        options: [
+            { text: '规定就是规定，不能开口子', scores: { yg: -1, wl: 2 } },
+            { text: '请示领导，让领导来定这个事', scores: { yg: 1, wl: 1 } },
+            { text: '在规定允许的范围内想办法变通', scores: { yg: 1, wl: -1 } },
+            { text: '帮他想个别的路径，虽然不走这个审批但能解决问题', scores: { yg: -1, wl: -2 } }
+        ]
+    },
     // ===== 加权决胜题（4题，每个维度1题，计算时分值×2）=====
     {
         text: '周末接到工作电话，说有个紧急材料要赶，你的真实反应是？',
@@ -538,13 +566,13 @@ var QUESTIONS = [
 
 - [ ] **Step 2: Verify questions load**
 
-Open browser console, type `QUESTIONS.length`. Should output `24`. Type `QUESTIONS[23].weighted`. Should output `true`. Type `QUESTIONS[0].options.length`. Should output `4`.
+Open browser console, type `QUESTIONS.length`. Should output `27`. Type `QUESTIONS[26].weighted`. Type `QUESTIONS[26].weighted`. Should output `true`. Type `QUESTIONS[0].options.length`. Should output `4`.
 
 - [ ] **Step 3: Commit**
 
 ```bash
 git add data.js
-git commit -m "feat: add 24 quiz questions with scoring (20 base + 4 weighted)"
+git commit -m "feat: add 27 quiz questions with scoring (23 base + 4 weighted)"
 ```
 
 ---
@@ -1521,7 +1549,7 @@ function animateDimensionBars() {
 
 - [ ] **Step 3: Verify end-to-end flow**
 
-Open `index.html`, complete all 24 questions. Should navigate to result page showing: type code, emoji, name, tagline, description, dimension bars (animated), and tips. Try "重新鉴定" button — should go back to intro.
+Open `index.html`, complete all 27 questions. Should navigate to result page showing: type code, emoji, name, tagline, description, dimension bars (animated), and tips. Try "重新鉴定" button — should go back to intro.
 
 - [ ] **Step 4: Commit**
 
@@ -1786,7 +1814,7 @@ Append to `app.js`:
 
 - [ ] **Step 4: Verify full flow including sharing**
 
-1. Open `index.html`, complete all 24 questions
+1. Open `index.html`, complete all 27 questions
 2. On result page, click "生成分享图" — should render a share image below the buttons
 3. Check URL bar — should show `?r=XXXX-nn-nn-nn-nn`
 4. Copy the URL, open in new tab — should show result page directly with "你的朋友测出了..." CTA
@@ -1811,7 +1839,7 @@ git commit -m "feat: add URL sharing, share image generation, and app initializa
 Open `index.html` in desktop browser. Complete the full flow:
 1. Intro page loads with correct styling
 2. Click "开始鉴定" — transitions to quiz
-3. Answer all 24 questions — options highlight, cards slide, progress updates
+3. Answer all 27 questions — options highlight, cards slide, progress updates
 4. Result page shows — type code, emoji, name, tagline, desc, dimension bars animate, tips shown
 5. Click "生成分享图" — image renders correctly
 6. Click "重新鉴定" — returns to intro
