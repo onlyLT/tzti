@@ -157,7 +157,7 @@ function showResult() {
 
     document.getElementById('resultCode').textContent = state.resultCode;
     if (type.image) {
-        document.getElementById('resultEmoji').innerHTML = '<img src="' + type.image + '" alt="' + type.name + '" class="result-avatar">';
+        document.getElementById('resultEmoji').innerHTML = '<img src="' + type.image + '" alt="' + type.name + '" class="result-avatar" />';
     } else {
         document.getElementById('resultEmoji').textContent = type.emoji;
     }
@@ -280,12 +280,12 @@ function renderShareCanvas(type, avatarImg) {
     ctx.scale(dpr, dpr);
 
     // 背景
-    ctx.fillStyle = '#1a1a2e';
+    ctx.fillStyle = '#faf8f5';
     ctx.fillRect(0, 0, w, h);
 
     // 水墨纹理
     var grad = ctx.createRadialGradient(w * 0.2, h * 0.3, 0, w * 0.2, h * 0.3, w * 0.5);
-    grad.addColorStop(0, 'rgba(196, 58, 49, 0.08)');
+    grad.addColorStop(0, 'rgba(196, 58, 49, 0.04)');
     grad.addColorStop(1, 'transparent');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, h);
@@ -299,53 +299,40 @@ function renderShareCanvas(type, avatarImg) {
     ctx.fillRect(0, 0, w, 3);
 
     // 标题
-    ctx.fillStyle = '#d4a847';
+    ctx.fillStyle = '#b8922e';
     ctx.font = '14px "Noto Serif SC", serif';
     ctx.textAlign = 'center';
     ctx.fillText('组 织 鉴 定 书', w / 2, 50);
 
     // 类型码
-    ctx.fillStyle = '#d4a847';
+    ctx.fillStyle = '#c43a31';
     ctx.font = '900 48px "Noto Serif SC", serif';
     ctx.fillText(state.resultCode, w / 2, 110);
 
     // 立绘或Emoji
     if (avatarImg) {
-        var avatarSize = 120;
+        var avatarSize = 180;
         var avatarX = w / 2 - avatarSize / 2;
-        var avatarY = 130;
-        // 圆形裁剪
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(w / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
-        ctx.closePath();
-        ctx.clip();
+        var avatarY = 125;
         ctx.drawImage(avatarImg, avatarX, avatarY, avatarSize, avatarSize);
-        ctx.restore();
-        // 圆形边框
-        ctx.beginPath();
-        ctx.arc(w / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(212, 168, 71, 0.3)';
-        ctx.lineWidth = 2;
-        ctx.stroke();
     } else {
         ctx.font = '48px sans-serif';
         ctx.fillText(type.emoji, w / 2, 200);
     }
 
     // 类型名
-    var nameY = avatarImg ? 285 : 230;
-    ctx.fillStyle = '#f0e6d3';
+    var nameY = avatarImg ? 330 : 230;
+    ctx.fillStyle = '#2a2a2a';
     ctx.font = '700 32px "Noto Serif SC", serif';
     ctx.fillText(type.name, w / 2, nameY);
 
     // 标签
-    ctx.fillStyle = '#d4a847';
+    ctx.fillStyle = '#c43a31';
     ctx.font = '15px "Noto Sans SC", sans-serif';
     ctx.fillText(type.tagline, w / 2, nameY + 35);
 
     // 描述（自动换行）
-    ctx.fillStyle = 'rgba(240, 230, 211, 0.7)';
+    ctx.fillStyle = 'rgba(42, 42, 42, 0.7)';
     ctx.font = '13px "Noto Sans SC", sans-serif';
     ctx.textAlign = 'left';
     var descLines = wrapText(ctx, type.desc, w - 80);
@@ -375,7 +362,7 @@ function renderShareCanvas(type, avatarImg) {
 
         var trackX = 65;
         var trackW = w - 170;
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
         roundRect(ctx, trackX, y + 2, trackW, 10, 5);
         ctx.fill();
 
@@ -386,12 +373,12 @@ function renderShareCanvas(type, avatarImg) {
         roundRect(ctx, trackX, y + 2, trackW * pct / 100, 10, 5);
         ctx.fill();
 
-        ctx.fillStyle = 'rgba(240, 230, 211, 0.4)';
+        ctx.fillStyle = 'rgba(42, 42, 42, 0.4)';
         ctx.font = '11px "Noto Sans SC", sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText(pct + ':' + (100 - pct), w - 65, y + 12);
 
-        ctx.fillStyle = '#d4a847';
+        ctx.fillStyle = '#b8922e';
         ctx.font = '500 14px "Noto Sans SC", sans-serif';
         ctx.fillText(d.right, w - 25, y + 12);
     }
@@ -415,7 +402,7 @@ function renderShareCanvas(type, avatarImg) {
     ctx.fillText('有效', w / 2, sealY + 10);
 
     // 底部
-    ctx.fillStyle = 'rgba(240, 230, 211, 0.25)';
+    ctx.fillStyle = 'rgba(42, 42, 42, 0.25)';
     ctx.font = '11px "Noto Sans SC", sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('TZTI 体制内人格测试', w / 2, h - 30);
