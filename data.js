@@ -202,7 +202,7 @@ var QUESTIONS = [
     {
         text: '领导安排了一个你觉得不合理的任务，你会？',
         options: [
-            { text: '先接下来，执行中再想办法调整', scores: { yg: 1, wl: 1 } },
+            { text: '先接下来，执行中再想办法调整', scores: { yg: 1, wl: -1 } },
             { text: '当场委婉表达不同意见', scores: { yg: -1, xh: 1 } },
             { text: '接了但偷偷按自己的方式做', scores: { yg: -1, wl: -1 } },
             { text: '先摸清领导的真实意图再决定怎么办', scores: { yg: 1, jf: 1 } }
@@ -286,7 +286,7 @@ var QUESTIONS = [
         text: '领导让你写一份"新质生产力"调研报告，你会？',
         options: [
             { text: '深入研究政策文件，走访调研，写出有深度的报告', scores: { jf: 2, yg: -1 } },
-            { text: '先看看上级怎么提的，对标对表把框架搭好', scores: { yg: 1, wl: 1 } },
+            { text: '先看看上级怎么提的，对标对表把框架搭好', scores: { yg: 1 } },
             { text: '网上搜几篇参考文章，整合一下交差', scores: { jf: -1, yg: 1 } },
             { text: '认真思考"新质生产力"到底怎么落地，写出自己的真实看法', scores: { yg: -2, wl: -1 } }
         ]
@@ -324,7 +324,7 @@ var QUESTIONS = [
         options: [
             { text: '如实汇报，问题摆出来才能解决', scores: { yg: -2, wl: -1 } },
             { text: '数据不改，但在叙述角度上下功夫，突出亮点弱化不足', scores: { yg: 1, jf: 1 } },
-            { text: '跟领导商量怎么写，这种事不能自己拿主意', scores: { yg: 1, wl: 1 } },
+            { text: '跟领导商量怎么写，这种事不能自己拿主意', scores: { yg: 1 } },
             { text: '反正每年都这样，照着模板写个差不多的交上去', scores: { jf: -2, xh: -1 } }
         ]
     },
