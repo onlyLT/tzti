@@ -172,12 +172,9 @@ body {
 }
 
 .intro-bg-grid img {
-    width: 180px;
-    height: 180px;
-    object-fit: cover;
-    object-position: center 30%;
-    clip-path: inset(15% 20%);
-    margin: -25px -35px;
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
 }
 
 #intro {
