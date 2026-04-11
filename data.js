@@ -151,7 +151,7 @@ var QUESTIONS = [
             { text: '前排居中，方便和领导互动', scores: { xh: 2, jf: 1 } },
             { text: '中间靠边，不远不近刚刚好', scores: { wl: 1, xh: -1 } },
             { text: '最后一排靠门，随时准备撤退', scores: { xh: -2, jf: -1 } },
-            { text: '无所谓，有座就行', scores: { jf: -1, wl: -1 } }
+            { text: '无所谓，有座就行', scores: { jf: -1 } }
         ]
     },
     {
@@ -187,14 +187,14 @@ var QUESTIONS = [
             { text: '实打实的工作业绩和数据', scores: { jf: 1, yg: -1 } },
             { text: '领导对你的印象和评价', scores: { yg: 1 } },
             { text: '别垫底就行，平安过关', scores: { jf: -2 } },
-            { text: '考核结果不重要，自己学到东西最重要', scores: { yg: -1, wl: -1 } }
+            { text: '考核结果不重要，自己学到东西最重要', scores: { yg: -1 } }
         ]
     },
     {
         text: '得知同事升职了，你的真实想法是？',
         options: [
             { text: '分析他为什么能升，复盘自己的差距', scores: { jf: 2 } },
-            { text: '恭喜恭喜，与我无关', scores: { jf: -1, xh: -1 } },
+            { text: '恭喜恭喜，与我无关', scores: { jf: -1 } },
             { text: '如果他确实有能力，心服口服', scores: { yg: -1 } },
             { text: '有点不爽，但也不会让人看出来', scores: { xh: -1 } }
         ]
@@ -204,7 +204,7 @@ var QUESTIONS = [
         options: [
             { text: '先接下来，执行中再想办法调整', scores: { yg: 1, wl: -1 } },
             { text: '当场委婉表达不同意见', scores: { yg: -1, xh: 1 } },
-            { text: '接了但偷偷按自己的方式做', scores: { yg: -1, wl: -1 } },
+            { text: '接了但偷偷按自己的方式做', scores: { yg: -1 } },
             { text: '先摸清领导的真实意图再决定怎么办', scores: { yg: 1, jf: 1 } }
         ]
     },
@@ -214,7 +214,7 @@ var QUESTIONS = [
             { text: '两边都处好关系，保持中立', scores: { yg: 1 } },
             { text: '选一边站，跟对人很重要', scores: { wl: -1 } },
             { text: '埋头干活不掺和，用实力说话', scores: { yg: -1, xh: -1 } },
-            { text: '看热闹不嫌事大，当个吃瓜群众', scores: { jf: -1, xh: -1 } }
+            { text: '看热闹不嫌事大，当个吃瓜群众', scores: { jf: -1, xh: 1 } }
         ]
     },
     {
@@ -223,7 +223,7 @@ var QUESTIONS = [
             { text: '帮了，反正也是积累人脉', scores: { yg: 1, jf: 1 } },
             { text: '看关系远近再决定', scores: { yg: 1 } },
             { text: '直接说"这不是我的职责范围"', scores: { yg: -2, xh: 1 } },
-            { text: '教他怎么做，但不替他做', scores: { yg: -1, jf: -1 } }
+            { text: '教他怎么做，但不替他做', scores: { yg: -1, xh: 1 } }
         ]
     },
     // ===== 八项规定与日常合规（6题）=====
